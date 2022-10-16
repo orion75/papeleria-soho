@@ -1,4 +1,4 @@
-package com.papeleria.soho.papeleriasoho.model;
+package com.papeleria.soho.papeleriasoho.models;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,10 +8,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @Entity
-@Table(name = "Users", uniqueConstraints = {
+@Table(name = "users", uniqueConstraints = {
     @UniqueConstraint(columnNames = "username"),
     @UniqueConstraint(columnNames = "email")
 })
@@ -40,4 +42,11 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    
+    public User(String username, String email, String password) {
+      this.username = username;
+      this.email = email;
+      this.password = password;
+    }
 }

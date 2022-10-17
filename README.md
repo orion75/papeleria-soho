@@ -1,1 +1,6 @@
 # papeleria-soho
+
+
+GRANT ALL PRIVILEGES ON *.* TO 'misiontic'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+EXIT;

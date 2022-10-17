@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.papeleria.soho.papeleriasoho.Exceptions.NotFoundException;
 import com.papeleria.soho.papeleriasoho.payload.response.Response;
 
 @RestControllerAdvice
@@ -35,10 +36,10 @@ public class WebControllerConfig {
         return resp;
     }
     
-    // @ResponseStatus(code = HttpStatus.NOT_FOUND)
-    // @ExceptionHandler(MethodNotFoundException.class)
-    // public Response<String> handleNotFoundExceptions(MethodNotFoundException ex) {
-    //     logger.error(ex.getMessage(), ex);
-    //     return new Response<String>(true, ex.getMessage());
-    // }
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public Response<String> handleNotFoundExceptions(NotFoundException ex) {
+        logger.error(ex.getMessage());
+        return new Response(true, ex.getMessage());
+    }
 }

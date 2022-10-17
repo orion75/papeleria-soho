@@ -3,6 +3,8 @@ package com.papeleria.soho.papeleriasoho.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import com.papeleria.soho.papeleriasoho.payload.response.Response;
 import com.papeleria.soho.papeleriasoho.services.TerceroService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,18 +33,33 @@ public class ClienteController {
     @Autowired
     TerceroService terceroService;
 
-    @Operation(summary = "Traer todos los productos")
+    @Operation(summary = "Traer todos los clientes")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Listado de productos", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProductoResponse.class)) }),
-            @ApiResponse(responseCode = "400", description = "MM")
+        @ApiResponse(responseCode = "200", description = "Listado de clientes", content = {
+            @Content(mediaType = "application/json", array =  @ArraySchema(schema =  @Schema(implementation = ProductoResponse.class)))
+        }),
+        @ApiResponse(responseCode = "400", description = "Error: Validacion del modelo", content = { 
+            @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) 
+        })
     })
     @GetMapping()
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(terceroService.findAll(ETipoTercero.CLIENTE));
     }
 
-    @PostMapping()
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> get(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(terceroService.findById(id, ETipoTercero.CLIENTE));
+    }
+    
+    @Operation(summary = "Crear un cliente")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", content = { @Content(mediaType = "application/json") }),
+        @ApiResponse(responseCode = "400", description = "Error: Validacion del modelo", content = { 
+            @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class)) 
+        })
+    })
+    @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody TerceroRequest model) {
         return ResponseEntity.ok(terceroService.save(model, ETipoTercero.CLIENTE));
     }

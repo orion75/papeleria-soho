@@ -48,6 +48,11 @@ public class ProductoController {
         return ResponseEntity.ok(productoService.findAll());
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> get(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(productoService.findById(id));
+    }
+
     @PostMapping()
     public ResponseEntity<?> save(@Valid @RequestBody ProductoRequest producto) {
         return ResponseEntity.ok(productoService.save(producto));

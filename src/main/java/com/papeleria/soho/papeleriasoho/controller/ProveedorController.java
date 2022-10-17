@@ -30,15 +30,20 @@ public class ProveedorController {
     @Autowired
     TerceroService terceroService;
 
-    @Operation(summary = "Traer todos los productos")
+    @Operation(summary = "Traer todos los proveedores")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Listado de productos", content = {
+            @ApiResponse(responseCode = "200", description = "Listado de proveedores", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ProductoResponse.class)) }),
             @ApiResponse(responseCode = "400", description = "MM")
     })
     @GetMapping()
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(terceroService.findAll(ETipoTercero.PROVEEDOR));
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> get(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(terceroService.findById(id, ETipoTercero.PROVEEDOR));
     }
 
     @PostMapping()

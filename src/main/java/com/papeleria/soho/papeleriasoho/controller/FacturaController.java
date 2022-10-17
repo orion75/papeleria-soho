@@ -29,17 +29,18 @@ public class FacturaController {
     @Autowired
     FacturaService facturaService;
 
-    @Operation(summary = "Traer todos los productos")
+    @Operation(summary = "Traer todas las facturas")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Listado de facturas   ", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProductoResponse.class)) }),
-            @ApiResponse(responseCode = "400", description = "MM")
+        @ApiResponse(responseCode = "200", description = "Listado de facturas", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ProductoResponse.class)) }),
+        @ApiResponse(responseCode = "400", description = "MM")
     })
     @GetMapping()
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(facturaService.findAll());
     }
 
+    @Operation(summary = "Traer factura por id")
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(facturaService.findById(id));

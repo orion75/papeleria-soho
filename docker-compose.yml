@@ -10,7 +10,7 @@ services:
     ports:
       - 8080:8080
     networks:
-      - orionsoft
+      - unabnetwork
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql.host:3306/soho?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=America/Bogota
 

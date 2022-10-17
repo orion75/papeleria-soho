@@ -11,18 +11,18 @@ import lombok.Setter;
 @Setter
 public class SignupRequest {
 
-    @NotBlank
+    @NotBlank(message = "El campo es requerido.")
     @Size(min = 3, max = 20)
     private String username;
 
-    @NotBlank
+    @NotBlank(message = "El campo es requerido.")
     @Size(max = 50)
     @Email
     private String email;
 
     private Set<String> role;
 
-    @NotBlank
+    @NotBlank(message = "El campo es requerido.")
     @Size(min = 6, max = 40)
     private String password;
 

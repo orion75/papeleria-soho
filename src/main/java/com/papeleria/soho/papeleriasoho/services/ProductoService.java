@@ -35,7 +35,9 @@ public class ProductoService implements IProductoService  {
 
     @Override
     public ProductoResponse findById(Long id) {
-        var item = Optional.ofNullable(productoRepository.findById(id).orElse(null));
+        var item = productoRepository.findById(id);
+        if (!item.isPresent())
+            throw new NotFoundException("Producto con id: " + id + " no existe");
         return modelMapper.map(item, ProductoResponse.class);
     }
 

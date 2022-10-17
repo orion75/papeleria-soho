@@ -39,7 +39,19 @@ public class TerceroService implements ITerceroService {
 
     @Override
     public TerceroResponse findById(Long id) {
-        var item = Optional.ofNullable(terceroRepository.findById(id).orElse(null));
+        var item = terceroRepository.findById(id);
+        if (!item.isPresent())
+            throw new NotFoundException("Tercero con id: " + id  + " no existe");
+        return modelMapper.map(item, TerceroResponse.class);
+    }
+
+    @Override
+    public TerceroResponse findById(Long id, ETipoTercero tipo) {
+        var item = terceroRepository.findById(id);
+        if (!item.isPresent())
+            throw new NotFoundException("Tercero con id: " + id  + " no existe");
+        if (item.get().getTipo() != tipo)
+            throw new NotFoundException("Tercero con id: " + id  + " no existe");
         return modelMapper.map(item, TerceroResponse.class);
     }
 
@@ -69,5 +81,4 @@ public class TerceroService implements ITerceroService {
             throw new NotFoundException("Tercero con id: " + id  + " no existe");
         terceroRepository.delete(item.get());
     }
-    
 }

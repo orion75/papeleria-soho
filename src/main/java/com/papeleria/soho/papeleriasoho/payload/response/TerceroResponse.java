@@ -1,7 +1,5 @@
 package com.papeleria.soho.papeleriasoho.payload.response;
 
-import com.papeleria.soho.papeleriasoho.models.ETipoDocumento;
-
 import lombok.Data;
 
 @Data

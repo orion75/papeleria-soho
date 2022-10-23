@@ -65,13 +65,16 @@ public class TerceroService implements ITerceroService {
 
     @Override
     public TerceroResponse update(Long id, TerceroRequest terceroReques) {
-        var item = Optional.ofNullable(terceroRepository.findById(id).orElse(null));
+        var item = terceroRepository.findById(id);
         if (!item.isPresent())
             throw new NotFoundException("Tercero con id: " + id  + " no existe");
-        var terceromodel = modelMapper.map(terceroReques, Tercero.class);
-        terceromodel.setId(item.get().getId());
-        terceromodel = terceroRepository.save(terceromodel);
-        return modelMapper.map(terceromodel, TerceroResponse.class);
+        item.get().setPrimerNombre(terceroReques.getPrimerNombre());
+        item.get().setSegundoNombre(terceroReques.getSegundoNombre());
+        item.get().setPrimerApellido(terceroReques.getPrimerApellido());
+        item.get().setSegundoApellido(terceroReques.getSegundoApellido());
+        item.get().setCelular(terceroReques.getCelular());
+        item.get().setDireccion(terceroReques.getDireccion());
+        return modelMapper.map(terceroRepository.save(item.get()), TerceroResponse.class);
     }
 
     @Override

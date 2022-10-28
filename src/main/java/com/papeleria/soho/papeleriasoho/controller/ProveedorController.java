@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @CrossOrigin(origins = "*", maxAge = 3600)
 //@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 @RestController
-@RequestMapping("/api/Proveedores")
+@RequestMapping("/api/proveedores")
 public class ProveedorController {
 
     @Autowired
